@@ -6,11 +6,9 @@ import asyncio
 import threading
 import requests
 from twitchio.ext import commands
-from pydub import AudioSegment
-from pydub.playback import play
-import io
 import re
 import aiohttp
+import pygame
 from google.cloud import texttospeech
 from google.oauth2 import service_account
 from langdetect import detect, LangDetectException
@@ -130,6 +128,7 @@ class VoiceBox:
 class GoogleTTS:
 	def __init__(self, credentials_path):
 		self.credentials_path = credentials_path
+		pygame.mixer.init()
 
 	def speak(self, text, volume, speed, language_code):
 		credentials = service_account.Credentials.from_service_account_file(self.credentials_path)
@@ -147,8 +146,15 @@ class GoogleTTS:
 			input=input_text, voice=voice, audio_config=audio_config)
 
 		audio_content = response.audio_content
-		audio_segment = AudioSegment.from_file(io.BytesIO(audio_content), format="mp3")
-		play(audio_segment)
+
+		# 再生のためにMP3データをメモリ内のファイルとして扱う
+		mp3_file = io.BytesIO(audio_content)
+		pygame.mixer.music.load(mp3_file, "mp3")
+		pygame.mixer.music.play()
+
+		# 再生が完了するまで待機
+		while pygame.mixer.music.get_busy():
+			pygame.time.Clock().tick(10)
 
 def get_speaker_map():
 	response = requests.get("http://localhost:50021/speakers")
