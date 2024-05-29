@@ -7,4 +7,5 @@ GCPの機能なので使いすぎると料金が課金されますが、100 万�
   
 コンパイルメモ  
 pip install nuitka  
-nuitka --standalone --onefile RetroYomiageTwitcher.py  
+nuitka --standalone --onefile --windows-disable-console RetroYomiageTwitcher.pyw
+
