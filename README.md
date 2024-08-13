@@ -6,6 +6,6 @@ GoogleTTSはAPI Keyが必要です。こちらもアプリ起動時のリンク�
 GCPの機能なので使いすぎると料金が課金されますが、100 万文字までは無料なので使い切る可能性が低いと思います。  
   
 コンパイルメモ  
-pip install nuitka  
-nuitka --standalone --onefile --windows-disable-console RetroYomiageTwitcher.pyw
+pip install pyinstaller
+pyinstaller --onefile --windowed --add-data "settings.ini;." --add-data "ng_settings.ini;." --add-data "replace_settings.ini;." --add-data "voicebox_speakers.ini;." RetroYomiageTwitcher.py
 
