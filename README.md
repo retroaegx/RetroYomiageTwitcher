@@ -7,5 +7,6 @@ GCPの機能なので使いすぎると料金が課金されますが、100 万�
   
 コンパイルメモ  
 pip install pyinstaller
+
 pyinstaller --onefile --windowed --add-data "settings.ini;." --add-data "ng_settings.ini;." --add-data "replace_settings.ini;." --add-data "voicebox_speakers.ini;." RetroYomiageTwitcher.py
 
